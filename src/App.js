@@ -11,8 +11,11 @@ import AddForm from './components/AddForm';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import DatePicker from './components/DatePicker';
+import { useSelector } from 'react-redux';
+import { selectPicker } from './features/dateSlice';
 
 function App() {
+  const picker = useSelector(selectPicker);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <>
@@ -26,7 +29,7 @@ function App() {
         <Route exact path="/addEmp">
           <Header title="Add Employee"/>
           <AddForm/>
-          <DatePicker/>
+          {picker && <DatePicker/>}
         </Route>
       </Switch>
     </div>

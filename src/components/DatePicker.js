@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./DatePicker.css"
 import { DateCalendar } from '@mui/x-date-pickers';
 
 const DatePicker = () => {
+    const [date, setDate] = useState(null);
   return (
     <div className='datePicker__mobile'>
         <div className="datePicker__btnRows">
@@ -13,7 +14,7 @@ const DatePicker = () => {
             <button>Next Tuesday</button>
             <button>After 1 week</button>
         </div>
-        <DateCalendar/>
+        <DateCalendar value={date} />
     </div>
   )
 }

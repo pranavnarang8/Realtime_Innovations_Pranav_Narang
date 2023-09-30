@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/addEmp">
           <Header title="Add Employee"/>
           <AddForm/>
-          {picker && <DatePicker/>}
+          {/* {picker && <DatePicker/>} */}
         </Route>
       </Switch>
     </div>

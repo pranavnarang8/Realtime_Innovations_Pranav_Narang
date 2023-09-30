@@ -84,7 +84,7 @@ export const dateSlice = createSlice({
             state.picker = true
         },
         closeDatePicker: (state) => {
-            state.roomId = false;
+            state.picker = false;
         }
     }
 })

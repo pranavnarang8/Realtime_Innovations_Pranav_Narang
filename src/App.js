@@ -13,6 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import DatePicker from './components/DatePicker';
 import { useSelector } from 'react-redux';
 import { selectPicker } from './features/dateSlice';
+import RoleOptions from './components/RoleOptions';
 
 function App() {
   const picker = useSelector(selectPicker);
@@ -30,6 +31,7 @@ function App() {
           <Header title="Add Employee"/>
           <AddForm/>
           {/* {picker && <DatePicker/>} */}
+          <RoleOptions/>
         </Route>
       </Switch>
     </div>

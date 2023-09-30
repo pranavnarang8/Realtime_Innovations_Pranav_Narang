@@ -1,0 +1,21 @@
+.roles{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom:0px;
+    background-color: #fff;
+    z-index: 50;
+    width: 100%;
+}
+
+.roleItems{
+    border-bottom: 1px solid lightgray;
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 10px;
+}
+
+.roleItems:nth-child(1){
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}

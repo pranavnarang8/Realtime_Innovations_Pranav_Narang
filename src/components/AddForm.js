@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./AddForm.css";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
@@ -7,14 +7,22 @@ import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOu
 import { useDispatch , useSelector } from 'react-redux';
 import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
 import { DateCalendar } from '@mui/x-date-pickers';
+import { openOptions, selectRole } from '../features/roleSlice';
 
 
 const AddForm = () => {
     const [name, setName] = useState(null);
-    const [role, setRole] = useState(null);
     const [tDate, setTDate] = useState(null)
     const dispatch = useDispatch();
     const picker = useSelector(selectPicker);
+    const role = useSelector(selectRole)
+
+    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
+
+
+    const handleOptions = () =>{
+        dispatch(openOptions())
+    }
 
     const handlePicker = () =>{
         dispatch(openDatePicker());
@@ -25,17 +33,74 @@ const AddForm = () => {
         setTDate(newValue.$D);
         dispatch(closeDatePicker())
     }
+
+    const createEmployee = () =>{
+        if(!idb){
+          alert("This browser doesn't support Indexed DB");
+          return;
+        }else{
+          const request = idb.open('employee-db', 1)
+
+          request.onerror = (error) =>{
+            alert("Error with Indexed DB ",error)
+          }
+
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if(!db.objectStoreNames.contains('employeeData')){
+              db.createObjectStore('employeeData', {
+                keyPath:"id"
+              })
+            }
+          }
+
+          request.onsuccess = () => {
+            console.log("Indexed DB created successfully")
+          }
+        }
+      }
+
+    const handleAddition = () => {
+        const dbPromise = idb.open("employee-db",1)
+        if(name && role){
+          dbPromise.onsuccess = () => {
+            const db = dbPromise.result;
+            const tx = db.transaction("employeeData","readwrite");
+            const employeeData = tx.objectStore("employeeData");
+            const employees = employeeData.add({
+              id:1,
+              name: name,
+              role: role.profile,
+            })
+    
+            employees.onsuccess = () => {
+              tx.oncomplete = () => {
+                db.close()
+              }
+              alert("Employee Added")
+            }
+    
+            employees.onerror = (error) =>{
+              alert("Error with Indexed DB here",error)
+            }
+          }
+        }
+      }
+
+      useEffect(()=>{
+        createEmployee()
+      },[])
   return (
     <>
     <div className='addForm__mobile'>
       <div className="addForm__nameInput">
         <PersonOutlineOutlinedIcon/>
-        <input type="text" placeholder='Employee Name' />
+        <input type="text" placeholder='Employee Name' onChange={(e) => setName(e.target.value)}/>
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" placeholder='Developer Role' />
-        <ArrowDropDownOutlinedIcon/>
+        <input type="text" value={role.profile} placeholder='Developer Role' />
+        <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
@@ -51,8 +116,10 @@ const AddForm = () => {
     
    <div className="addForm__actions">
         <button>Cancel</button>
-        <button>Save</button>
+        <button onClick={handleAddition}>Save</button>
     </div>
+
+    {/* changes made for Date Picker */}
     {picker && <div className='datePicker__mobile'>
         <div className="datePicker__btnRows">
             <button>Today</button>

@@ -1,0 +1,17 @@
+.listItem__mobile{
+    display: flex;
+    flex-direction: column;
+}
+
+.listItem__mobile > p{
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.listItem__mobile > span{
+    color:#9b9b9b;
+    margin-bottom: 3px;
+    font-weight: 400;
+    font-size: 11.5px;
+}

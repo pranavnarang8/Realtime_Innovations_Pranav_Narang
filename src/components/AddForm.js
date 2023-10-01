@@ -29,6 +29,7 @@ const AddForm = () => {
     const dispatch = useDispatch();
     const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
+    console.log(employee)
     const handleOptions = () =>{
         dispatch(openOptions())
     }

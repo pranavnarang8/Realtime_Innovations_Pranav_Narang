@@ -69,11 +69,12 @@ const List = () => {
         fetchEmployees();
         // sortEmployees(empData)
     },[])
+    console.log(currentList, empData, previousList)
 
   return (
     <>
     <div className="list__mobileView">
-        {empData?.length>2 ?
+        {empData?.length>0?
         <div className='list__mobile'>
         <div className="list__currentContainer">
             <h3>Current List</h3>

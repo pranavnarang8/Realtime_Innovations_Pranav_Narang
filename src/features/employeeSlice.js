@@ -11,7 +11,7 @@ export const employeeSlice = createSlice({
             state.list = action.payload
         },
         setEmployee : (state,action) => {
-            state.id = action.payload
+            state.employee = action.payload
         }
     }
 })

@@ -29,7 +29,6 @@ const AddForm = () => {
     const dispatch = useDispatch();
     const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
-
     const handleOptions = () =>{
         dispatch(openOptions())
     }
@@ -55,22 +54,22 @@ const AddForm = () => {
 
     const handleAddition = () => {
         const dbPromise = idb.open("employee-db",1)
-        if(name && role){
+        if(name && role && fDate){
           dbPromise.onsuccess = () => {
             const db = dbPromise.result;
             const tx = db.transaction("employeeData","readwrite");
             const employeeData = tx.objectStore("employeeData");
             let employees;
-            if(!tDate){
-                employees = employeeData.add({
+            if(!employee){
+                employees = employeeData.put({
                     id: data.length+1,
                     name: name,
                     role: role.profile,
                     fromDate: fDate.toUTCString()
                   })
             }else{
-                employees = employeeData.add({
-                    id: data?.length + 1,
+                employees = employeeData.put({
+                    id: employee.id,
                     name: name,
                     role: role.profile,
                     fromDate: fDate.toUTCString(),

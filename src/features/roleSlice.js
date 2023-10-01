@@ -15,11 +15,14 @@ export const roleSlice = createSlice({
         },
         chooseRole: (state,action) => {
             state.role = action.payload;
+        },
+        removeRole: (state) => {
+            state.role = "";
         }
     }
 })
 
-export const {openOptions, closeOptions, chooseRole} = roleSlice.actions;
+export const {openOptions, closeOptions, chooseRole, removeRole} = roleSlice.actions;
 
 export const selectOptions = state => state.role.options;
 export const selectRole = state => state.role.role;

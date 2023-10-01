@@ -1,34 +1,98 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./List.css"
 import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
 
 
 const List = () => {
     const[currentList, setCurrentList] = useState(null);
     const[previousList, setPreviousList] = useState(null);
+    const [empData, setEmpData] = useState([])
     const history = useHistory();
+
+    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB
+
+    const fetchEmployees = () =>{
+        const dbPromise = idb.open("employee-db",1)
+    
+        dbPromise.onsuccess = () => {
+          const db = dbPromise.result;
+          const tx = db.transaction("employeeData","readonly");
+          const employeeData = tx.objectStore("employeeData");
+          const employees = employeeData.getAll();
+          employees.onsuccess = (query) => {
+            setEmpData(query.srcElement.result);
+            let data = query.srcElement.result
+            let cList = data.filter((item) => {
+                return !item.toDate;
+            })
+            setCurrentList(cList)
+            let pList = data.filter((item) => {
+                return item.toDate
+            })
+            setPreviousList(pList)
+          }
+    
+          employees.onerror = (error) => {
+            alert("Error with the fetch request", error)
+          }
+    
+          tx.oncomplete = () => {
+            db.close();
+          }
+      }
+    }
+
+    // const sortEmployees = () =>{
+    //     if(empData.length>0){
+    //         let cList = data.filter((item) => {
+    //             return !item.toDate;
+    //         })
+    //         setCurrentList(cList)
+    //         let pList = data.filter((item) => {
+    //             return item.toDate
+    //         })
+    //         setPreviousList(pList)
+    //     }
+        
+    // }
 
     const addEmployee = () => {
         history.push("/addEmp")
     }
+
+    
+    useEffect(() => {
+        fetchEmployees();
+        // sortEmployees(empData)
+    },[])
+
   return (
     <>
     <div className="list__mobileView">
-        {currentList || previousList ?
+        {empData?.length>2 ?
         <div className='list__mobile'>
         <div className="list__currentContainer">
             <h3>Current List</h3>
             <ul>
-                <li><ListItem listType="Current"/></li>
+                {currentList?.map(({id, name, role}) => {
+                    return (
+                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id}/></li>
+                    )
+                })}
             </ul>
         </div>
         <div className="list__previousContainer">
         <h3>Previous List</h3>
             <ul>
-                <li><ListItem listType="Previous"/></li>
+            {previousList?.map(({id, name, role}) => {
+                    return (
+                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id}/></li>
+                    )
+                })}
             </ul>
         </div>
         <button onClick={addEmployee}><AddOutlinedIcon/></button>

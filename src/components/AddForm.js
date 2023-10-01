@@ -6,20 +6,20 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
 import { useDispatch , useSelector } from 'react-redux';
 import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
-import { openOptions, removeRole, selectRole } from '../features/roleSlice';
+import { chooseRole, openOptions, removeRole, selectRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { selectEmployee, selectList } from '../features/employeeSlice';
+import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
 
 
 const AddForm = () => {
     const [name, setName] = useState("");
-    const [tDate, setTDate] = useState(new Date())
-    const [fDate, setFDate] = useState(new Date())
+    const [tDate, setTDate] = useState(null)
+    const [fDate, setFDate] = useState(null)
     const [tPicker, setTPicker] = useState(false)
     const [fPicker, setFPicker] = useState(false)
     const [data,setData] = useState([])
@@ -29,7 +29,6 @@ const AddForm = () => {
     const dispatch = useDispatch();
     const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
-    console.log(employee)
     const handleOptions = () =>{
         dispatch(openOptions())
     }
@@ -48,6 +47,7 @@ const AddForm = () => {
 
     const handleCancel = () => {
         setName("");
+        dispatch(unsetEmployee())
         dispatch(removeRole())
         history.push("/")
     }
@@ -66,7 +66,8 @@ const AddForm = () => {
                     id: data.length+1,
                     name: name,
                     role: role.profile,
-                    fromDate: fDate.toUTCString()
+                    fromDate: fDate.toUTCString(),
+                    toDate: tDate?.toUTCString(),
                   })
             }else{
                 employees = employeeData.put({
@@ -74,7 +75,7 @@ const AddForm = () => {
                     name: name,
                     role: role.profile,
                     fromDate: fDate.toUTCString(),
-                    toDate: tDate.toUTCString(),
+                    toDate: tDate?.toUTCString(),
                   })
             }
             
@@ -89,8 +90,11 @@ const AddForm = () => {
               alert("Error with Indexed DB here",error)
             }
           }
+        }else{
+            alert("Please fill in the mandatory Parameters")
         }
         setName("");
+        dispatch(unsetEmployee())
         dispatch(removeRole())
         history.push("/")
       }
@@ -103,10 +107,10 @@ const AddForm = () => {
               const db = dbPromise.result;
               const tx = db.transaction("employeeData","readonly");
               const employeeData = tx.objectStore("employeeData");
-              const employees = employeeData.getAll();
+              let employees = employeeData.getAll();
               employees.onsuccess = (query) => {
-                setData(query.srcElement.result);
-                
+                let res = query.srcElement.result
+                setData(res);
               }
         
               employees.onerror = (error) => {
@@ -120,6 +124,16 @@ const AddForm = () => {
         }
         fetchEmployees();
 
+        if(employee){
+            setName(employee.name);
+            dispatch(chooseRole({
+                profile: employee.role
+            }))
+            console.log(employee.fromDate)
+            setFDate(employee.fromDate)
+            setTDate(employee.toDate)
+            
+        }
       },[])
 
   return (
@@ -131,16 +145,16 @@ const AddForm = () => {
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role.profile} placeholder='Developer Role' />
+        <input type="text" value={role.profile} placeholder='Employee Role' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
-            <input type="text" value={fDate.toDateString().substring(4,15)} />
+            <input type="text" value={fDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <div className="addForm__dateInput">
-            <input type="text" value = {tDate.toDateString().substring(4,15)} />
+            <input type="text" value = {tDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
       </div>
@@ -162,8 +176,8 @@ const AddForm = () => {
             <button>After 1 week</button>
         </div>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-        {tPicker && <DateCalendar value={tDate} onChange={(newValue) => handleChange(newValue)}/>}
-        {fPicker && <DateCalendar value={tDate} onChange={(newValue) => handleChange(newValue)}/>}
+        {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
+        {fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
         </LocalizationProvider>
     </div>}
     </>

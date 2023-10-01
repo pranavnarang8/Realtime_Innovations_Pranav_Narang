@@ -12,11 +12,14 @@ export const employeeSlice = createSlice({
         },
         setEmployee : (state,action) => {
             state.employee = action.payload
+        },
+        unsetEmployee: (state) => {
+            state.employee = null;
         }
     }
 })
 
-export const {setList, setEmployee} = employeeSlice.actions;
+export const {setList, setEmployee, unsetEmployee} = employeeSlice.actions;
 
 export const selectList = state => state.employee.list;
 export const selectEmployee = state => state.employee.employee

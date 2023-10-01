@@ -27,8 +27,9 @@ const List = () => {
             setEmpData(query.srcElement.result);
             let data = query.srcElement.result
             let cList = data.filter((item) => {
-                return !item.toDate;
+                return !item.toDate  
             })
+            console.log(cList)
             setCurrentList(cList)
             let pList = data.filter((item) => {
                 return item.toDate
@@ -45,21 +46,6 @@ const List = () => {
           }
       }
     }
-
-    // const sortEmployees = () =>{
-    //     if(empData.length>0){
-    //         let cList = data.filter((item) => {
-    //             return !item.toDate;
-    //         })
-    //         setCurrentList(cList)
-    //         let pList = data.filter((item) => {
-    //             return item.toDate
-    //         })
-    //         setPreviousList(pList)
-    //     }
-        
-    // }
-
     const addEmployee = () => {
         history.push("/addEmp")
     }
@@ -67,9 +53,8 @@ const List = () => {
     
     useEffect(() => {
         fetchEmployees();
-        // sortEmployees(empData)
     },[])
-    console.log(currentList, empData, previousList)
+
 
   return (
     <>
@@ -79,9 +64,9 @@ const List = () => {
         <div className="list__currentContainer">
             <h3>Current List</h3>
             <ul>
-                {currentList?.map(({id, name, role}) => {
+                {currentList?.map(({id, name, role, fromDate}) => {
                     return (
-                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id}/></li>
+                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/></li>
                     )
                 })}
             </ul>
@@ -89,9 +74,9 @@ const List = () => {
         <div className="list__previousContainer">
         <h3>Previous List</h3>
             <ul>
-            {previousList?.map(({id, name, role}) => {
+            {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
-                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id}/></li>
+                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/></li>
                     )
                 })}
             </ul>

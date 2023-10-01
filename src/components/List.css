@@ -24,8 +24,8 @@
 }
 
 .list__currentContainer > ul, .list__previousContainer > ul{
-    padding: 10px;
     list-style-type: none;
+    padding-left: 0;
 }
 
 .list__emptyContainer{

@@ -54,6 +54,7 @@
     outline: none;
     border: none;
     width: 100%;
+    text-overflow: ellipsis;
 }
 
 .addForm__actions{
@@ -85,7 +86,7 @@
 }
 
 /*Changes made for datePicker*/
-.datePicker__mobile{
+.addForm__datePicker{
     display: flex;
     width: 90%;
     margin-left: auto;
@@ -102,14 +103,14 @@
    
 }
 
-.datePicker__btnRows{
+.addForm__pickerBtn{
     display: flex;
     width: 100%;
     padding: 10px;
     justify-content: space-around;
 }
 
-.datePicker__btnRows > button{
+.addForm__pickerBtn > button{
     width:40%;
     outline: none;
     border: none;
@@ -119,7 +120,7 @@
     border-radius: 7px;
 }
 
-.datePicker__btnRows > button:hover{
+.addForm__pickerBtn > button:hover{
     background-color: #1DA1F2;
     color: #fff;
     opacity: 0.9;

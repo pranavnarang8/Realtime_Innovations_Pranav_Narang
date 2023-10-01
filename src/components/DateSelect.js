@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import "./DatePicker.css"
+import "./DateSelect.css"
 import { DateCalendar } from '@mui/x-date-pickers';
 
-const DatePicker = () => {
+const DateSelect = () => {
     const [date, setDate] = useState(null);
   return (
-    <div className='datePicker__mobile'>
-        <div className="datePicker__btnRows">
+    <div className='dateSelect__mobile'>
+        <div className="dateSelect__btnRows">
             <button>Today</button>
             <button>Next Monday</button>
         </div>
-        <div className="datePicker__btnRows">
+        <div className="dateSelect__btnRows">
             <button>Next Tuesday</button>
             <button>After 1 week</button>
         </div>
@@ -19,4 +19,4 @@ const DatePicker = () => {
   )
 }
 
-export default DatePicker
+export default DateSelect

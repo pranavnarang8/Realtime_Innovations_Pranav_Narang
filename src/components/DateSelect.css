@@ -1,4 +1,4 @@
-.datePicker__mobile{
+.dateSelect__mobile{
     display: flex;
     width: 90%;
     margin-left: auto;
@@ -15,14 +15,14 @@
    
 }
 
-.datePicker__btnRows{
+.dateSelect__btnRows{
     display: flex;
     width: 100%;
     padding: 10px;
     justify-content: space-around;
 }
 
-.datePicker__btnRows > button{
+.dateSelect__btnRows > button{
     width:40%;
     outline: none;
     border: none;
@@ -32,7 +32,7 @@
     border-radius: 7px;
 }
 
-.datePicker__btnRows > button:hover{
+.dateSelect__btnRows > button:hover{
     background-color: #1DA1F2;
     color: #fff;
     opacity: 0.9;

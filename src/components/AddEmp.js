@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
 
-const AddEmp = () => {
+const AddEmp = ({idb}) => {
     const [name, setName] = useState("");
     const [tDate, setTDate] = useState(null)
     const [fDate, setFDate] = useState(null)
@@ -22,9 +22,38 @@ const AddEmp = () => {
     const [data, setData] = useState([])
     const employee = useSelector(selectEmployee)
     const role = useSelector(selectRole);
+    const [profile, setProfile] = useState("")
     const dispatch = useDispatch()
 
-    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB
+
+    const onSelectToday = () =>{
+      handleChange(new Date())
+    }
+
+    const onSelectMonday = () =>{
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+      const daysUntilMonday = 7 - currentDay + 1;
+      const nextMondayDate = new Date();
+      nextMondayDate.setDate(currentDate.getDate() + daysUntilMonday);
+      handleChange(nextMondayDate)
+    }
+
+    const onSelectTuesday = () =>{
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+      const daysUntilTuesday = 7 - currentDay + 2;
+      const nextTuesdayDate = new Date();
+      nextTuesdayDate.setDate(currentDate.getDate() + daysUntilTuesday);
+      handleChange(nextTuesdayDate)
+    }
+
+    const onSelectNextWeek = () =>{
+      const currentDate = new Date()
+      const nextWeek = new Date(currentDate);
+      nextWeek.setDate(currentDate.getDate() + 7);
+      handleChange(nextWeek)
+    }
 
     const handleChange = (newValue) => {
       if(tPicker){
@@ -42,7 +71,11 @@ const AddEmp = () => {
     }
 
     const handleCancel = () => {
-
+        setName("");
+        dispatch(unsetEmployee())
+        dispatch(removeRole())
+        setTDate(null);
+        setFDate(null)
     }
 
     const handleAddition = () => {
@@ -55,7 +88,7 @@ const AddEmp = () => {
             let employees;
             if(!employee){
                 employees = employeeData.put({
-                    id: data.length+1,
+                    id: name.substring(0,4) + data.length+1,
                     name: name,
                     role: role.profile,
                     fromDate: fDate.toUTCString(),
@@ -88,6 +121,8 @@ const AddEmp = () => {
         setName("");
         dispatch(unsetEmployee())
         dispatch(removeRole())
+        setTDate(null);
+        setFDate(null)
     }
 
     useEffect(()=>{
@@ -120,10 +155,8 @@ const AddEmp = () => {
           dispatch(chooseRole({
               profile: employee.role
           }))
-          console.log(employee.fromDate)
           setFDate(employee.fromDate)
-          setTDate(employee.toDate)
-          
+          setTDate(employee.toDate) 
       }
     },[employee])
 
@@ -138,7 +171,7 @@ const AddEmp = () => {
       </div>
       <div className="addEmp__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role?.profile} placeholder='Employee Role' />
+        <input type="text" value={role?.profile === "" ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Employee Role' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
         <div className="addEmp__dateInput">
@@ -157,19 +190,22 @@ const AddEmp = () => {
     </div>
     </div>
 
-{(tPicker || fPicker) && <div className='addForm__datePicker'>
-<div className="addForm__pickerBtn">
-    <button>Today</button>
-    <button>Next Monday</button>
+{(tPicker || fPicker) && 
+<div className="addEmp__pickerContainer">
+<div className='addEmp__datePicker'>
+<div className="addEmp__pickerBtn">
+    <button onClick={onSelectToday}>Today</button>
+    <button onClick={onSelectMonday}>Next Monday</button>
 </div>
-<div className="addForm__pickerBtn">
-    <button>Next Tuesday</button>
-    <button>After 1 week</button>
+<div className="addEmp__pickerBtn">
+    <button onClick={onSelectTuesday}>Next Tuesday</button>
+    <button onClick={onSelectNextWeek}>After 1 week</button>
 </div>
 <LocalizationProvider dateAdapter={AdapterDateFns}>
 {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
 {fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
 </LocalizationProvider>
+</div>
 </div>}
 </>
   )

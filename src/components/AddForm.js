@@ -14,7 +14,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
 
 
-const AddForm = () => {
+const AddForm = ({idb}) => {
     const [name, setName] = useState("");
     const [tDate, setTDate] = useState(null)
     const [fDate, setFDate] = useState(null)
@@ -25,10 +25,38 @@ const AddForm = () => {
     const employee = useSelector(selectEmployee)
     const history = useHistory();
     const dispatch = useDispatch();
-    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
     const handleOptions = () =>{
         dispatch(openOptions())
+    }
+
+    const onSelectToday = () =>{
+      handleChange(new Date())
+    }
+
+    const onSelectMonday = () =>{
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+      const daysUntilMonday = 7 - currentDay + 1;
+      const nextMondayDate = new Date();
+      nextMondayDate.setDate(currentDate.getDate() + daysUntilMonday);
+      handleChange(nextMondayDate)
+    }
+
+    const onSelectTuesday = () =>{
+      const currentDate = new Date();
+      const currentDay = currentDate.getDay();
+      const daysUntilTuesday = 7 - currentDay + 2;
+      const nextTuesdayDate = new Date();
+      nextTuesdayDate.setDate(currentDate.getDate() + daysUntilTuesday);
+      handleChange(nextTuesdayDate)
+    }
+
+    const onSelectNextWeek = () =>{
+      const currentDate = new Date()
+      const nextWeek = new Date(currentDate);
+      nextWeek.setDate(currentDate.getDate() + 7);
+      handleChange(nextWeek)
     }
 
     const handleChange = (newValue) =>{
@@ -127,7 +155,6 @@ const AddForm = () => {
             dispatch(chooseRole({
                 profile: employee.role
             }))
-            console.log(employee.fromDate)
             setFDate(employee.fromDate)
             setTDate(employee.toDate)
             
@@ -166,12 +193,12 @@ const AddForm = () => {
     {/* changes made for Date Picker */}
     {(tPicker || fPicker) && <div className='addForm__datePicker'>
         <div className="addForm__pickerBtn">
-            <button>Today</button>
-            <button>Next Monday</button>
+            <button onClick={onSelectToday}>Today</button>
+            <button onClick={onSelectMonday}>Next Monday</button>
         </div>
         <div className="addForm__pickerBtn">
-            <button>Next Tuesday</button>
-            <button>After 1 week</button>
+            <button onClick={onSelectTuesday}>Next Tuesday</button>
+            <button onClick={onSelectNextWeek}>After 1 week</button>
         </div>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
         {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}

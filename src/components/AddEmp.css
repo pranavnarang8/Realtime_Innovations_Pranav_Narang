@@ -76,3 +76,47 @@
     background-color: #1DA1F2;
     color: #fff;
 }
+
+.addEmp__pickerContainer{
+    display: flex;
+    justify-content: center;
+}
+.addEmp__datePicker{
+    display: flex;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    z-index: 999;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    position: fixed;
+    top:140px;
+    opacity: 1;
+   
+}
+
+.addEmp__pickerBtn{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.addEmp__pickerBtn > button{
+    flex:0.4;
+    outline: none;
+    border: none;
+    background-color: whitesmoke;
+    color:#1DA1F2;
+    padding: 7px 9px;
+    border-radius: 7px;
+}
+
+.addEmp__pickerBtn > button:hover{
+    background-color: #1DA1F2;
+    color: #fff;
+    opacity: 0.9;
+}

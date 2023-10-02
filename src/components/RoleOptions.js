@@ -3,7 +3,7 @@ import "./RoleOptions.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseRole, closeOptions, selectOptions } from '../features/roleSlice';
 
-const RoleOptions = () => {
+const RoleOptions = ({desktop}) => {
     const option = useSelector(selectOptions);
     const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ const RoleOptions = () => {
     }
   return (
     <>
-    {option && <div className="roles">
+    {option && !desktop && <div className="roles">
       <div className="roleItems" onClick={(e) => roleSelect(e)}>
         <p>Product Design</p>
       </div>
@@ -30,6 +30,24 @@ const RoleOptions = () => {
         <p>Product Owner</p>
       </div>
     </div>}
+    {option && desktop && 
+    <div className="roles__container">
+    <div className='roles__desktop'>
+    <div className="roleItems__desktop" onClick={(e) => roleSelect(e)}>
+        <p>Product Design</p>
+      </div>
+      <div className="roleItems__desktop" onClick={(e) => roleSelect(e)}>
+        <p>Flutter Developer</p>
+      </div>
+      <div className="roleItems__desktop" onClick={(e) => roleSelect(e)}>
+        <p>QA Tester</p>
+      </div>
+      <div className="roleItems__desktop" onClick={(e) => roleSelect(e)}>
+        <p>Product Owner</p>
+      </div>
+    </div>
+    </div>
+    }
     </>
   )
 }

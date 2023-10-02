@@ -3,3 +3,7 @@
     height: 100vh;
     overflow-y: hidden;
 }
+
+.app__opacity{
+    opacity: 0.7;
+}

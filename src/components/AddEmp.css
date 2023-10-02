@@ -120,3 +120,34 @@
     color: #fff;
     opacity: 0.9;
 }
+
+@media all and (max-width:1200px) and (min-width:850px){
+    .addEmp__desktop{
+        padding: 30px 50px;
+    }
+    .addEmp__container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .addEmp__datePicker{
+        width: 320px;
+    }
+}
+
+@media all and (max-width:850px) and (min-width:541px){
+    .addEmp__desktop{
+        padding: 30px 20px;
+    }
+    .addEmp__container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .addEmp__datePicker{
+        width: 320px;
+    }
+}
+

@@ -56,3 +56,13 @@
 .listItem__actions > .MuiSvgIcon-root:hover{
     opacity: 0.7 !important;
 }
+
+@media all and (max-width:630px) and (min-width:541px){
+    .listItem__desktop{
+        display: grid;
+    }
+
+    .listItem__desktop > p, .listItem__desktop > span, .listItem__desktop > .listItem__actions{
+        padding: 5px 20px;
+    }
+}

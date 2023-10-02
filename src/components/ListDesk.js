@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import "./ListDesk.css"
 import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectList, setList } from '../features/employeeSlice';
 
 const ListDesk = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
     const[previousList, setPreviousList] = useState(null);
     const [empData, setEmpData] = useState([]);
+    const dispatch = useDispatch();
+    const list = useSelector(selectList)
 
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)
@@ -18,11 +22,11 @@ const ListDesk = ({idb}) => {
           const employees = employeeData.getAll();
           employees.onsuccess = (query) => {
             setEmpData(query.srcElement.result);
-            let data = query.srcElement.result
+            let data = query.srcElement.result;
+            dispatch(setList(data));
             let cList = data.filter((item) => {
                 return !item.toDate  
             })
-            console.log(cList)
             setCurrentList(cList)
             let pList = data.filter((item) => {
                 return item.toDate
@@ -44,7 +48,7 @@ const ListDesk = ({idb}) => {
     
     useEffect(() => {
         fetchEmployees();
-    },[])
+    },[list])
 
   return (
     <div className='listDesk'>

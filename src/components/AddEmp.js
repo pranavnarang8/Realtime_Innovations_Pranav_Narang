@@ -5,7 +5,7 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectRole } from '../features/roleSlice';
+import { selectProfile, selectRole, setProfile } from '../features/roleSlice';
 import { chooseRole, openOptions, removeRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { DateCalendar } from '@mui/x-date-pickers';
@@ -22,10 +22,13 @@ const AddEmp = ({idb}) => {
     const [data, setData] = useState([])
     const employee = useSelector(selectEmployee)
     const role = useSelector(selectRole);
-    const [profile, setProfile] = useState("")
+    // const [profile, setProfile] = useState(null)
+    const profile = useSelector(selectProfile)
     const dispatch = useDispatch()
 
-
+    const handleTDateChange = () =>{
+      setTDate(null)
+    }
     const onSelectToday = () =>{
       handleChange(new Date())
     }
@@ -72,49 +75,55 @@ const AddEmp = ({idb}) => {
 
     const handleCancel = () => {
         setName("");
-        dispatch(unsetEmployee())
-        dispatch(removeRole())
-        setTDate(null);
-        setFDate(null)
+        dispatch(unsetEmployee());
+        handleTDateChange();
+        setFDate(null);
+        dispatch(setProfile());
     }
 
     const handleAddition = () => {
       const dbPromise = idb.open("employee-db",1)
         if(name && role && fDate){
-          dbPromise.onsuccess = () => {
-            const db = dbPromise.result;
-            const tx = db.transaction("employeeData","readwrite");
-            const employeeData = tx.objectStore("employeeData");
-            let employees;
-            if(!employee){
-                employees = employeeData.put({
-                    id: name.substring(0,4) + data.length+1,
-                    name: name,
-                    role: role.profile,
-                    fromDate: fDate.toUTCString(),
-                    toDate: tDate?.toUTCString(),
-                  })
-            }else{
-                employees = employeeData.put({
-                    id: employee.id,
-                    name: name,
-                    role: role.profile,
-                    fromDate: fDate.toUTCString(),
-                    toDate: tDate?.toUTCString(),
-                  })
-            }
-            
-    
-            employees.onsuccess = () => {
-              tx.oncomplete = () => {
-                db.close()
+          if(role.profile == "Product Design" || "Flutter Developer" || "QA Tester" || "Product Owner"){
+            dbPromise.onsuccess = () => {
+              const db = dbPromise.result;
+              const tx = db.transaction("employeeData","readwrite");
+              const employeeData = tx.objectStore("employeeData");
+              let employees;
+              if(!employee){
+                  employees = employeeData.put({
+                      id: name.substring(0,4) + data.length+1,
+                      name: name,
+                      role: role.profile,
+                      fromDate: fDate.toUTCString(),
+                      toDate: tDate?.toUTCString(),
+                    })
+              }else{
+                  employees = employeeData.put({
+                      id: employee.id,
+                      name: name,
+                      role: role.profile,
+                      fromDate: fDate.toUTCString(),
+                      toDate: tDate?.toUTCString(),
+                    })
+              }
+              
+      
+              employees.onsuccess = () => {
+                tx.oncomplete = () => {
+                  db.close()
+                }
+              }
+      
+              employees.onerror = (error) =>{
+                alert("Error with Indexed DB here",error)
               }
             }
-    
-            employees.onerror = (error) =>{
-              alert("Error with Indexed DB here",error)
-            }
+          }else{
+            alert("Please Select a role from the listed ones");
+            return;
           }
+          
         }else{
             alert("Please fill in the mandatory Parameters")
         }
@@ -122,7 +131,8 @@ const AddEmp = ({idb}) => {
         dispatch(unsetEmployee())
         dispatch(removeRole())
         setTDate(null);
-        setFDate(null)
+        setFDate(null);
+        dispatch(setProfile());
     }
 
     useEffect(()=>{
@@ -167,19 +177,19 @@ const AddEmp = ({idb}) => {
         <div className="addEmp__container">
       <div className="addEmp__nameInput">
         <PersonOutlineOutlinedIcon/>
-        <input type="text" placeholder='Employee Name' value={name} onChange={(e) => setName(e.target.value)}/>
+        <input type="text" placeholder='Employee Name *' value={name} onChange={(e) => setName(e.target.value)}/>
       </div>
       <div className="addEmp__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role?.profile === "" ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Employee Role' />
+        <input type="text" value={profile ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Employee Role *' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="From" value={fDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} onChange={()=>setFDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} onChange={handleTDateChange} />
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
     </div>

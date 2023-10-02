@@ -7,7 +7,7 @@
 }
 
 .listDesk__desktop{
-    flex:0.7;
+    flex:0.71;
     display: flex;
     flex-direction: column;
 }
@@ -54,5 +54,34 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
+}
+
+@media all and (max-width:1200px) and (min-width:630px){
+.listDesk__desktop{
+    flex: 0.72;
+}
+}
+@media all and (max-width:630px) and (min-width:615px){
+    .listDesk__desktop{
+        flex: 0.73;
+    }
+}
+
+@media all and (max-width:615px) and (min-width:600px){
+    .listDesk__desktop{
+        flex: 0.74;
+    }
+}
+
+@media all and (max-width:600px) and (min-width:575px){
+    .listDesk__desktop{
+        flex: 0.76;
+    }
+}
+
+@media all and (max-width:575px) and (min-width:541px){
+    .listDesk__desktop{
+        flex: 0.81;
+    }
 }
 

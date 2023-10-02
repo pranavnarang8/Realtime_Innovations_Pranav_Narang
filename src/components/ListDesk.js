@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import "./ListDesk.css"
 import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
-const ListDesk = () => {
+const ListDesk = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
     const[previousList, setPreviousList] = useState(null);
     const [empData, setEmpData] = useState([]);
-
-    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB
 
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)
@@ -58,7 +55,7 @@ const ListDesk = () => {
             <ul>
                 {currentList?.map(({id, name, role, fromDate}) => {
                     return (
-                        <li><ListItem desktop={true} listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/></li>
+                        <li><ListItem idb={idb} desktop={true} listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/></li>
                     )
                 })}
             </ul>
@@ -68,7 +65,7 @@ const ListDesk = () => {
             <ul>
             {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
-                        <li><ListItem desktop={true} listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/></li>
+                        <li><ListItem idb={idb} desktop={true} listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/></li>
                     )
                 })}
             </ul>

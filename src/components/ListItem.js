@@ -6,10 +6,9 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
+const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB;
 
   const editEmployee = () => {
     dispatch(setEmployee({

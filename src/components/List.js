@@ -4,16 +4,12 @@ import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useDispatch } from 'react-redux';
 
-
-const List = () => {
+const List = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
     const[previousList, setPreviousList] = useState(null);
     const [empData, setEmpData] = useState([])
     const history = useHistory();
-
-    const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB
 
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)

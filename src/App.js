@@ -13,6 +13,7 @@ import RoleOptions from './components/RoleOptions';
 import { useEffect, useState } from 'react';
 import { selectEmployee } from './features/employeeSlice';
 import AddEmp from './components/AddEmp';
+import ListDesk from './components/ListDesk';
 
 function App() {
   const picker = useSelector(selectPicker);
@@ -77,6 +78,7 @@ function App() {
     <div className="app__desktop">
     <Header title="Employee List"/>
     <AddEmp/>
+    <ListDesk/>
     </div>
 }
     </>

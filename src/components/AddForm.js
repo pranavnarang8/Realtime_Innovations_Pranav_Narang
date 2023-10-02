@@ -166,16 +166,16 @@ const AddForm = ({idb}) => {
     <div className='addForm__mobile'>
       <div className="addForm__nameInput">
         <PersonOutlineOutlinedIcon/>
-        <input type="text" placeholder='Employee Name' value={name} onChange={(e) => setName(e.target.value)}/>
+        <input type="text" placeholder='Employee Name *' value={name} onChange={(e) => setName(e.target.value)}/>
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role.profile} placeholder='Employee Role' />
+        <input type="text" value={role.profile} placeholder='Employee Role *' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
-            <input type="text" placeholder="From" value={fDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <div className="addForm__dateInput">

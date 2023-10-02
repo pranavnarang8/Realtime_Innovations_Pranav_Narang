@@ -5,6 +5,7 @@ export const roleSlice = createSlice({
     initialState:{
         options:false,
         role:"",
+        profile:null,
     },
     reducers:{
         openOptions : (state) => {
@@ -17,14 +18,21 @@ export const roleSlice = createSlice({
             state.role = action.payload;
         },
         removeRole: (state) => {
-            state.role = "";
+            state.role = null;
+        },
+        setProfile: (state) => {
+            state.profile = " "
+        },
+        resetProfile: (state) => {
+            state.profile = null
         }
     }
 })
 
-export const {openOptions, closeOptions, chooseRole, removeRole} = roleSlice.actions;
+export const {openOptions, closeOptions, chooseRole, removeRole, setProfile, resetProfile} = roleSlice.actions;
 
 export const selectOptions = state => state.role.options;
 export const selectRole = state => state.role.role;
+export const selectProfile = state => state.role.profile;
 
 export default roleSlice.reducer;

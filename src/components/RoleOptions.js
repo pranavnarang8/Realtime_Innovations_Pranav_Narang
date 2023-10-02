@@ -1,7 +1,7 @@
 import React from 'react';
 import "./RoleOptions.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { chooseRole, closeOptions, selectOptions } from '../features/roleSlice';
+import { chooseRole, closeOptions, resetProfile, selectOptions } from '../features/roleSlice';
 
 const RoleOptions = ({desktop}) => {
     const option = useSelector(selectOptions);
@@ -12,6 +12,7 @@ const RoleOptions = ({desktop}) => {
         dispatch(chooseRole({
             profile: e.target.innerText,
         }))
+        dispatch(resetProfile(null))
         dispatch(closeOptions())
     }
   return (
@@ -31,7 +32,7 @@ const RoleOptions = ({desktop}) => {
       </div>
     </div>}
     {option && desktop && 
-    <div className="roles__container">
+    <div className={`roles__container ${option && "roles__opacity"}`}>
     <div className='roles__desktop'>
     <div className="roleItems__desktop" onClick={(e) => roleSelect(e)}>
         <p>Product Design</p>

@@ -8,8 +8,6 @@ import { useDispatch , useSelector } from 'react-redux';
 import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
 import { chooseRole, openOptions, removeRole, selectRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -150,11 +148,11 @@ const AddForm = () => {
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
-            <input type="text" value={fDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="From" value={fDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <div className="addForm__dateInput">
-            <input type="text" value = {tDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
       </div>

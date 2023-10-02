@@ -13,10 +13,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useSelector } from 'react-redux';
 import { selectPicker } from './features/dateSlice';
 import RoleOptions from './components/RoleOptions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { selectEmployee } from './features/employeeSlice';
 
 function App() {
   const picker = useSelector(selectPicker);
+  const employee = useSelector(selectEmployee);
+  const [mobileView, setMobileView] = useState(true)
 
   const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
@@ -46,10 +49,18 @@ function App() {
     }
   }
 
+  window.addEventListener("resize", function () {
+    if(this.window.innerWidth > 540){
+      setMobileView(false)
+    }else{
+      setMobileView(true)
+    }
+})
+
   createEmployeeDB()
   return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <>
+    {mobileView && window.innerWidth < 540?
     <Router>
     <div className="app">
       <Switch>
@@ -58,16 +69,20 @@ function App() {
         <List/>
         </Route>
         <Route exact path="/addEmp">
-          <Header title="Add Employee"/>
+          <Header title={employee ? "Edit Employee Details":"Add Employee"}/>
           <AddForm/>
-          {/* {picker && <DatePicker/>} */}
           <RoleOptions/>
         </Route>
       </Switch>
     </div>
-    </Router>
+    </Router> : 
+    <>
+    <Header title="Employee List"/>
+    <AddForm/>
+    <List/>
     </>
-    // </LocalizationProvider>
+}
+    </>
   );
 }
 

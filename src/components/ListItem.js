@@ -17,7 +17,10 @@ const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
       fromDate: fromDate,
       toDate: toDate,
     }))
-    history.push("/addEmp")
+    if(!desktop){
+      history.push("/addEmp")
+    }
+    
   }
   return (
     <>
@@ -31,7 +34,7 @@ const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
       <span>{role}</span>
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       <div className="listItem__actions">
-        <EditIcon/>
+        <EditIcon onClick={editEmployee}/>
         <DeleteIcon/>
       </div>
     </div>}

@@ -79,6 +79,7 @@ function App() {
     <Header title="Employee List"/>
     <AddEmp/>
     <ListDesk/>
+    <RoleOptions/>
     </div>
 }
     </>

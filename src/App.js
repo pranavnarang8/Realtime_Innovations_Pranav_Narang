@@ -14,11 +14,13 @@ import { useEffect, useState } from 'react';
 import { selectEmployee } from './features/employeeSlice';
 import AddEmp from './components/AddEmp';
 import ListDesk from './components/ListDesk';
+import { selectOptions } from './features/roleSlice';
 
 function App() {
   const picker = useSelector(selectPicker);
   const employee = useSelector(selectEmployee);
   const [mobileView, setMobileView] = useState(true)
+  const option = useSelector(selectOptions);
 
   const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
@@ -65,21 +67,21 @@ function App() {
       <Switch>
         <Route exact path="/">
         <Header title="Employee List"/>
-        <List/>
+        <List idb={idb}/>
         </Route>
         <Route exact path="/addEmp">
           <Header title={employee ? "Edit Employee Details":"Add Employee"}/>
-          <AddForm/>
-          <RoleOptions/>
+          <AddForm idb={idb}/>
+          <RoleOptions desktop={false}/>
         </Route>
       </Switch>
     </div>
     </Router> : 
-    <div className="app__desktop">
+    <div className={`app__desktop ${option && "app__opacity"}`}>
     <Header title="Employee List"/>
-    <AddEmp/>
-    <ListDesk/>
-    <RoleOptions/>
+    <AddEmp idb={idb}/>
+    <ListDesk idb={idb}/>
+    <RoleOptions desktop={true}/>
     </div>
 }
     </>

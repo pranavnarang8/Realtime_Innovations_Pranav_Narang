@@ -9,6 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+
   const editEmployee = () => {
     dispatch(setEmployee({
       id: id,
@@ -22,6 +24,26 @@ const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
     }
     
   }
+
+  const deleteEmployee = () =>{
+    const dbPromise = idb.open("employee-db",1)
+    dbPromise.onsuccess = () => {
+      const db = dbPromise.result;
+      const tx = db.transaction("employeeData","readwrite");
+      const employeeData = tx.objectStore("employeeData");
+      const deletedEmp = employeeData.delete(id)
+
+      deletedEmp.onsuccess = () => {
+        tx.oncomplete = () => {
+          db.close()
+        }
+      }
+
+      deletedEmp.onerror = (error) =>{
+        alert("Error with Indexed DB here",error)
+      }
+  }
+}
   return (
     <>
     {!desktop ? <div className='listItem__mobile' onClick={editEmployee}>
@@ -35,7 +57,7 @@ const ListItem = ({id, name, role, fromDate, toDate , desktop}) => {
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       <div className="listItem__actions">
         <EditIcon onClick={editEmployee}/>
-        <DeleteIcon/>
+        <DeleteIcon onClick={deleteEmployee}/>
       </div>
     </div>}
     </>

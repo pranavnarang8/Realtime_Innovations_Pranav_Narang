@@ -45,12 +45,14 @@
     display: flex;
     flex:0.15;
     justify-content: flex-end;
+
 }
 
 .listItem__actions > .MuiSvgIcon-root{
     color:#1DA1F2 !important;
     font-size: 18px !important;
     margin-left: 12px !important;
+    cursor: pointer;
 }
 
 .listItem__actions > .MuiSvgIcon-root:hover{

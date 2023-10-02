@@ -5,7 +5,7 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProfile, selectRole, setProfile } from '../features/roleSlice';
+import { selectOptions, selectProfile, selectRole, setProfile } from '../features/roleSlice';
 import { chooseRole, openOptions, removeRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { DateCalendar } from '@mui/x-date-pickers';
@@ -25,6 +25,7 @@ const AddEmp = ({idb}) => {
     // const [profile, setProfile] = useState(null)
     const profile = useSelector(selectProfile)
     const dispatch = useDispatch()
+    const option = useSelector(selectOptions)
 
     const handleTDateChange = () =>{
       setTDate(null)
@@ -172,7 +173,7 @@ const AddEmp = ({idb}) => {
 
   return (
     <>
-    <div className='addEmp'>
+    <div className={`addEmp ${option && "addEmp__opacity"}`}>
       <div className='addEmp__desktop'>
         <div className="addEmp__container">
       <div className="addEmp__nameInput">

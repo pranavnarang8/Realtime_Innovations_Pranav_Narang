@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.addEmp__opacity{
+    opacity: 0.7;
+}
+
 .addEmp__desktop{
     display:flex;
     flex-direction: column;

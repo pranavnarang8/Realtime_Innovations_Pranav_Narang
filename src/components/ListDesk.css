@@ -6,6 +6,10 @@
     overflow-y: scroll;
 }
 
+.listDesk__opacity{
+    opacity: 0.7;
+}
+
 .listDesk__desktop{
     flex:0.71;
     display: flex;

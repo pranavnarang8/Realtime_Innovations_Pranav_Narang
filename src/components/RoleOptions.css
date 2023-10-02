@@ -41,11 +41,15 @@
 
 .roleItems__desktop{
     border-bottom: 1px solid lightgray;
-    background-color: #fff;
+    background-color: whitesmoke;
     text-align: center;
     padding: 10px;
     width: 100%;
     cursor: pointer;
+    /* color:#9b9b9b; */
+}
+
+.roleItems__desktop:hover{
     color:#1DA1F2;
 }
 

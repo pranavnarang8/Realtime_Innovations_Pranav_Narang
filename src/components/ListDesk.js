@@ -4,6 +4,7 @@ import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectList, setList } from '../features/employeeSlice';
+import { selectOptions } from '../features/roleSlice';
 
 const ListDesk = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
@@ -11,7 +12,7 @@ const ListDesk = ({idb}) => {
     const [empData, setEmpData] = useState([]);
     const dispatch = useDispatch();
     const list = useSelector(selectList)
-
+    const option = useSelector(selectOptions)
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)
     
@@ -51,7 +52,7 @@ const ListDesk = ({idb}) => {
     },[list])
 
   return (
-    <div className='listDesk'>
+    <div className={`listDesk ${option && "listDesk__opacity"}`}>
         {empData?.length>0?
         <div className='listDesk__desktop'>
         <div className="listDesk__currentContainer">

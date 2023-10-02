@@ -3,18 +3,16 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from "react-router-dom";
 import Header from './components/Header';
 import List from './components/List';
 import AddForm from './components/AddForm';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useSelector } from 'react-redux';
 import { selectPicker } from './features/dateSlice';
 import RoleOptions from './components/RoleOptions';
 import { useEffect, useState } from 'react';
 import { selectEmployee } from './features/employeeSlice';
+import AddEmp from './components/AddEmp';
 
 function App() {
   const picker = useSelector(selectPicker);
@@ -34,10 +32,10 @@ function App() {
         alert("Error with Indexed DB ",error)
       }
 
-      request.onupgradeneeded = async() => {
+      request.onupgradeneeded = () => {
         const db = request.result;
         if(!db.objectStoreNames.contains('employeeData')){
-          await db.createObjectStore('employeeData', {
+          db.createObjectStore('employeeData', {
             keyPath:"id"
           })
         }
@@ -76,11 +74,10 @@ function App() {
       </Switch>
     </div>
     </Router> : 
-    <>
+    <div className="app__desktop">
     <Header title="Employee List"/>
-    <AddForm/>
-    <List/>
-    </>
+    <AddEmp/>
+    </div>
 }
     </>
   );

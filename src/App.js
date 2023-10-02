@@ -10,7 +10,7 @@ import AddForm from './components/AddForm';
 import { useSelector } from 'react-redux';
 import { selectPicker } from './features/dateSlice';
 import RoleOptions from './components/RoleOptions';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { selectEmployee } from './features/employeeSlice';
 import AddEmp from './components/AddEmp';
 import ListDesk from './components/ListDesk';
@@ -58,7 +58,7 @@ function App() {
     }
 })
 
-  createEmployeeDB()
+  createEmployeeDB();
   return (
     <>
     {mobileView && window.innerWidth < 540?
@@ -77,7 +77,7 @@ function App() {
       </Switch>
     </div>
     </Router> : 
-    <div className={`app__desktop ${option && "app__opacity"}`}>
+    <div className="app__desktop">
     <Header title="Employee List"/>
     <AddEmp idb={idb}/>
     <ListDesk idb={idb}/>

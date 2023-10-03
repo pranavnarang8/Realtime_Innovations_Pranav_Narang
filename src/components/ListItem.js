@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./ListItem.css"
 import { useDispatch } from 'react-redux';
 import { setEmployee } from '../features/employeeSlice';
@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
+  const [isSwiped, setIsSwiped] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,6 +23,10 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       history.push("/addEmp")
     }
     
+  }
+
+  const handleSwipe = () =>{
+    setIsSwiped(true);
   }
 
   const deleteEmployee = () =>{
@@ -45,10 +50,13 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
 }
   return (
     <>
-    {!desktop ? <div className='listItem__mobile' onClick={editEmployee}>
+    {!desktop ? <div className={`listItem ${isSwiped && "listItem__swiped"}`}  onTouchStart={handleSwipe}>
+      <div className="listItem__mobile" onClick={editEmployee}>
       <p>{name}</p>
       <span>{role}</span>
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
+      </div>
+      {isSwiped && <div className='listItem__swipeDelete'><DeleteIcon onClick={deleteEmployee}/></div>}
     </div> : 
     <div className='listItem__desktop'>
       <p>{name}</p>

@@ -170,7 +170,7 @@ const AddForm = ({idb}) => {
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role.profile} placeholder='Employee Role *' />
+        <input type="text" value={role?.profile} placeholder='Employee Role *' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">

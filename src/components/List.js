@@ -62,7 +62,7 @@ const List = ({idb}) => {
             <ul>
                 {currentList?.map(({id, name, role, fromDate}) => {
                     return (
-                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/></li>
+                        <li><ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/></li>
                     )
                 })}
             </ul>
@@ -72,7 +72,7 @@ const List = ({idb}) => {
             <ul>
             {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
-                        <li><ListItem listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/></li>
+                        <li><ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/></li>
                     )
                 })}
             </ul>

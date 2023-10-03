@@ -95,7 +95,7 @@ const AddForm = ({idb}) => {
             let employees;
             if(!employee){
                 employees = employeeData.put({
-                    id: data.length+1,
+                    id: name.substring(0,4) + data.length+1,
                     name: name,
                     role: role.profile,
                     fromDate: fDate.toUTCString(),

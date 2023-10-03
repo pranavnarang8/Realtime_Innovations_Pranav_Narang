@@ -15,6 +15,37 @@
     z-index: 10;
 }
 
+.list__bottom{
+    background-color: whitesmoke;
+    position: fixed;
+    align-items: center;
+    bottom: 0;
+    left:0;
+    right: 0;
+    z-index: 10;
+    padding: 8px 15px;
+    display: flex;
+}
+
+.list__bottom > button{
+    background-color: #1DA1F2;
+    outline: none;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px 8px;
+    margin-left: auto;
+}
+
+.list__bottom > p{
+    font-size: 14px;
+}
+
+.list__bottom > button:hover, .list__mobile > button{
+    opacity: 0.8;
+}
+
+
 .list__currentContainer > h3, .list__previousContainer > h3{
     background-color: whitesmoke;
     color:#1DA1F2;

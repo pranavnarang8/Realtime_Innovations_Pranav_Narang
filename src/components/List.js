@@ -88,7 +88,11 @@ const List = ({idb}) => {
                 })}
             </ul>
         </div>}
+        <div className="list__bottom">
+            <p>Swipe Left to Delete</p>
         <button onClick={addEmployee}><AddOutlinedIcon/></button>
+        </div>
+        
         </div> : 
         <>
         <div className="list__emptyContainer">

@@ -45,7 +45,7 @@ function App() {
       }
 
       request.onsuccess = () => {
-        console.log("Indexed DB created successfully")
+        
       }
     }
   }

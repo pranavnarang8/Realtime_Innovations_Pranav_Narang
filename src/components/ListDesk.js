@@ -51,7 +51,6 @@ const ListDesk = ({idb}) => {
     
     useEffect(() => {
         fetchEmployees();
-        console.log("Hello")
     },[list])
 
   return (

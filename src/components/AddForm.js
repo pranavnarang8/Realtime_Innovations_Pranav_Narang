@@ -198,16 +198,20 @@ const AddForm = ({idb}) => {
         <button onClick={handleAddition}>Save</button>
     </div>
 
-    {/* changes made for Date Picker */}
+    
     {(tPicker || fPicker) && <div className='addForm__datePicker'>
-        <div className="addForm__pickerBtn">
+        {fPicker && <><div className="addForm__pickerBtn">
             <button onClick={onSelectToday}>Today</button>
             <button onClick={onSelectMonday}>Next Monday</button>
         </div>
         <div className="addForm__pickerBtn">
             <button onClick={onSelectTuesday}>Next Tuesday</button>
             <button onClick={onSelectNextWeek}>After 1 week</button>
-        </div>
+        </div> </> } 
+        {tPicker && <div className="addForm__pickerBtn">
+            <button onClick={() => setTPicker(false)}>No Date</button>
+            <button onClick={onSelectToday}>Today</button>
+        </div>}
         <LocalizationProvider dateAdapter={AdapterDateFns}>
         {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
         {fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}

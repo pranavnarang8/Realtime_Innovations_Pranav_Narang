@@ -212,14 +212,20 @@ const AddEmp = ({idb}) => {
 {(tPicker || fPicker) && 
 <div className="addEmp__pickerContainer">
 <div className='addEmp__datePicker'>
-<div className="addEmp__pickerBtn">
+{fPicker && <><div className="addEmp__pickerBtn">
     <button onClick={onSelectToday}>Today</button>
     <button onClick={onSelectMonday}>Next Monday</button>
 </div>
 <div className="addEmp__pickerBtn">
     <button onClick={onSelectTuesday}>Next Tuesday</button>
     <button onClick={onSelectNextWeek}>After 1 week</button>
+</div></>}
+{
+  tPicker &&  <div className="addEmp__pickerBtn">
+  <button onClick={()=>setTPicker(false)}>No Date</button>
+  <button onClick={onSelectToday}>Today</button>
 </div>
+}
 <LocalizationProvider dateAdapter={AdapterDateFns}>
 {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
 {fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}

@@ -28,11 +28,19 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
   }
 
   const handleSwipe = () =>{
+    setTimeout(() => {
       if(!isSwiped){
         setIsSwiped(true);
       }else{
         setIsSwiped(false)
       }
+    },500)
+  }
+
+  const handleDelete = () =>{
+    setTimeout(()=>{
+      deleteEmployee();
+    },500)
   }
 
   
@@ -63,13 +71,13 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
 }
   return (
     <>
-    {!desktop ? <li className={`listItem ${isSwiped && "listItem__swiped"}`}  onTouchStart={handleSwipe}>
+    {!desktop ? <li className={`listItem ${isSwiped && "listItem__swiped"}`}  onTouchStart={handleSwipe} onTouchEnd={handleDelete}>
       <div className="listItem__mobile" onClick={editEmployee}>
       <p>{name}</p>
       <span>{role}</span>
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       </div>
-      {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon onClick={deleteEmployee}/></div>}
+      {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon/></div>}
     </li> : 
     <div className='listItem__desktop'>
       <p>{name}</p>

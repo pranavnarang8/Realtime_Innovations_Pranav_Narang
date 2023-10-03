@@ -1,26 +1,40 @@
 .listItem{
     display: flex;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    transition: transform 0.6s ease-in-out;
 }
 
 .listItem__mobile{
     display: flex;
     flex:1;
     flex-direction: column;
+    background-color: #fff;
     padding: 10px;
     border-bottom: 1px solid lightgray;
-    transition: transform 0.6s ease;
+   
 }
 
 .listItem__swiped{
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    width: 100%;
+    overflow: hidden;
+    transform: translateX(-5%);
 }
 
 .listItem__swipeDelete{
     display: flex;
+    cursor:pointer;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    width: 20%;
+    outline: none;
+    border: none;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid lightgray;
+    /* border-bottom: 1px solid lightgray; */
     color: #fff !important;
     background-color: red;
 }

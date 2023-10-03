@@ -25,6 +25,7 @@ const ListDesk = ({idb}) => {
           employees.onsuccess = (query) => {
             setEmpData(query.srcElement.result);
             response = query.srcElement.result;
+            let reference = new Date()
             let cList = response.filter((item) => {
                 if(item.toDate){
                     let checkDate = new Date(item.toDate);

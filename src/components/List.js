@@ -68,8 +68,8 @@ const List = ({idb}) => {
     <div className="list__mobileView">
         {empData?.length>0?
         <div className='list__mobile'>
-        <div className="list__currentContainer">
-            <h3>Current List</h3>
+        {currentList.length > 0 && <div className="list__currentContainer">
+            <h3>Current Employees</h3>
             <ul>
                 {currentList?.map(({id, name, role, fromDate}) => {
                     return (
@@ -77,9 +77,9 @@ const List = ({idb}) => {
                     )
                 })}
             </ul>
-        </div>
-        <div className="list__previousContainer">
-        <h3>Previous List</h3>
+        </div>}
+        {previousList.length > 0 && <div className="list__previousContainer">
+        <h3>Previous Employees</h3>
             <ul>
             {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
@@ -87,7 +87,7 @@ const List = ({idb}) => {
                     )
                 })}
             </ul>
-        </div>
+        </div>}
         <button onClick={addEmployee}><AddOutlinedIcon/></button>
         </div> : 
         <>

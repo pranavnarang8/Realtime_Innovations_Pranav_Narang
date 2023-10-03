@@ -58,11 +58,12 @@ const ListDesk = ({idb}) => {
     },[list])
 
   return (
-    <div className={`listDesk ${option && "listDesk__opacity"}`}>
+    <>
         {empData?.length>0?
+            <div className={`listDesk ${option && "listDesk__opacity"}`}>
         <div className='listDesk__desktop'>
-        <div className="listDesk__currentContainer">
-            <h3>Current List</h3>
+        {currentList.length > 0 && <div className="listDesk__currentContainer">
+            <h3>Current Employees</h3>
             <ul>
                 {currentList?.map(({id, name, role, fromDate}) => {
                     return (
@@ -70,9 +71,9 @@ const ListDesk = ({idb}) => {
                     )
                 })}
             </ul>
-        </div>
-        <div className="listDesk__previousContainer">
-        <h3>Previous List</h3>
+        </div>}
+        {previousList.length > 0 && <div className="listDesk__previousContainer">
+        <h3>Previous Employees</h3>
             <ul>
             {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
@@ -80,9 +81,10 @@ const ListDesk = ({idb}) => {
                     )
                 })}
             </ul>
-        </div>
+        </div>}
         {/* <button onClick={addEmployee}><AddOutlinedIcon/></button> */}
-        </div> : 
+        </div> 
+        </div>: 
         <>
         <div className="listDesk__emptyContainer">
             <img src={logo} alt="" />
@@ -90,7 +92,8 @@ const ListDesk = ({idb}) => {
         </div>
         </>}
       
-    </div>
+    
+    </>
   )
 }
 

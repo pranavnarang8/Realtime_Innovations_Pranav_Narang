@@ -46,6 +46,29 @@
     opacity: 0.8;
 }
 
+.list__deleteDialog{
+    display: flex;
+    background-color: rgb(32, 32, 32);
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0px;
+    left:0;
+    right:0px;
+    z-index: 11;
+    padding: 5px 10px;
+    align-items: center;
+}
+
+.list__deleteDialog > h4{
+    color:white;
+    margin-right: auto;
+    font-weight: 400;
+}
+
+.list__deleteDialog > p{
+    color:#1DA1F2;
+}
+
 
 .list__currentContainer > h3, .list__previousContainer > h3{
     background-color: whitesmoke;

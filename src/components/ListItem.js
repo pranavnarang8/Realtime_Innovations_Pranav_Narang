@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./ListItem.css"
 import { useDispatch } from 'react-redux';
-import { setEmployee, setList } from '../features/employeeSlice';
+import { resetDeleteDialog, setDeleteDialog, setEmployee, setList } from '../features/employeeSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -63,7 +63,11 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       }
   }
 
-  dispatch(setList(true))
+  dispatch(setList(true));
+  dispatch(setDeleteDialog());
+  setTimeout(() => {
+    dispatch(resetDeleteDialog())
+  },2000)
   if(!desktop){
     setIsSwiped(false)
     history.push("/")
@@ -77,7 +81,7 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       <span>{role}</span>
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       </div>
-      {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon/></div>}
+      {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon onClick={deleteEmployee}/></div>}
     </li> : 
     <div className='listItem__desktop'>
       <p>{name}</p>

@@ -5,7 +5,7 @@ import logo from "../Frame_19726.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectList, setList } from '../features/employeeSlice';
+import { selectDeleteDialog, selectList, setDeleteDialog, setList } from '../features/employeeSlice';
 
 const List = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
@@ -13,7 +13,8 @@ const List = ({idb}) => {
     const [empData, setEmpData] = useState([])
     const history = useHistory();
     const dispatch = useDispatch();
-    const list = useSelector(selectList)
+    const list = useSelector(selectList);
+    const deleteDialog = useSelector(selectDeleteDialog)
 
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)
@@ -92,7 +93,9 @@ const List = ({idb}) => {
             <p>Swipe Left to Delete</p>
         <button onClick={addEmployee}><AddOutlinedIcon/></button>
         </div>
-        
+        {deleteDialog && <div className='list__deleteDialog'>
+            <h4>Employee Data has been Deleted</h4>
+            <p>Undo</p></div>}
         </div> : 
         <>
         <div className="list__emptyContainer">

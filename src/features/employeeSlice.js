@@ -5,6 +5,7 @@ export const employeeSlice = createSlice({
     initialState:{
         list:null,
         employee:null,
+        delete:false,
     },
     reducers:{
         setList : (state, action) => {
@@ -15,13 +16,22 @@ export const employeeSlice = createSlice({
         },
         unsetEmployee: (state) => {
             state.employee = null;
+        },
+        setDeleteDialog: (state) => {
+            state.delete = true;
+        },
+        resetDeleteDialog: (state) => {
+            state.delete = false;
         }
+    
+
     }
 })
 
-export const {setList, setEmployee, unsetEmployee} = employeeSlice.actions;
+export const {setList, setEmployee, unsetEmployee, setDeleteDialog, resetDeleteDialog} = employeeSlice.actions;
 
 export const selectList = state => state.employee.list;
-export const selectEmployee = state => state.employee.employee
+export const selectEmployee = state => state.employee.employee;
+export const selectDeleteDialog = state => state.employee.delete;
 
 export default employeeSlice.reducer;

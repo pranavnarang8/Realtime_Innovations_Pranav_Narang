@@ -64,21 +64,21 @@ function App() {
     <>
     {mobileView && window.innerWidth < 540?
     <Router>
-    <div className="app" onTouchStart={()=>dispatch(closeOptions)}>
+    <div className="app">
       <Switch>
         <Route exact path="/">
         <Header title="Employee List"/>
         <List idb={idb}/>
         </Route>
         <Route exact path="/addEmp">
-          <Header title={employee ? "Edit Employee Details":"Add Employee"}/>
+          <Header idb={idb} title={employee ? "Edit Employee Details":"Add Employee"} employee={employee}/>
           <AddForm idb={idb}/>
           <RoleOptions desktop={false}/>
         </Route>
       </Switch>
     </div>
     </Router> : 
-    <div className="app__desktop" onClick={()=>dispatch(closeOptions)}>
+    <div className="app__desktop">
     <Header title="Employee List"/>
     <AddEmp idb={idb}/>
     <ListDesk idb={idb}/>

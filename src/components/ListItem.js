@@ -71,7 +71,7 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
 }
   return (
     <>
-    {!desktop ? <li className={`listItem ${isSwiped && "listItem__swiped"}`}  onTouchStart={handleSwipe} onTouchEnd={handleDelete}>
+    {!desktop ? <li className={`listItem ${isSwiped && "listItem__swiped"}`}  onTouchStart={handleSwipe} >
       <div className="listItem__mobile" onClick={editEmployee}>
       <p>{name}</p>
       <span>{role}</span>

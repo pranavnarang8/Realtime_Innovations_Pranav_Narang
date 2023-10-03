@@ -4,12 +4,19 @@
     position: sticky;
     top:0px;
     z-index:10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header__mobile > h2{
     padding: 10px;
     font-weight: 500;
     font-size: 16px;
+}
+
+.header__mobile > .MuiSvgIcon-root{
+    margin-right: 10px;
 }
 
 .header__opacity{

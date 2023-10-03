@@ -4,6 +4,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { useDispatch , useSelector } from 'react-redux';
 import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
 import { chooseRole, openOptions, removeRole, selectRole } from '../features/roleSlice';
@@ -184,6 +185,7 @@ const AddForm = ({idb}) => {
             <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
+        <ArrowRightAltIcon/>
         <div className="addForm__dateInput">
             <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} />
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>

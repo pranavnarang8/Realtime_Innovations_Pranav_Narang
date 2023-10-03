@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
+import { selectEmployee, selectList, setList, unsetEmployee } from '../features/employeeSlice';
 
 const AddEmp = ({idb}) => {
     const [name, setName] = useState("");
@@ -129,6 +129,7 @@ const AddEmp = ({idb}) => {
             alert("Please fill in the mandatory Parameters")
         }
         setName("");
+        dispatch(setList(false))
         dispatch(unsetEmployee())
         dispatch(removeRole())
         setTDate(null);
@@ -166,8 +167,8 @@ const AddEmp = ({idb}) => {
           dispatch(chooseRole({
               profile: employee.role
           }))
-          setFDate(employee.fromDate)
-          setTDate(employee.toDate) 
+          setFDate(employee.fromDate);
+          setTDate(employee.toDate); 
       }
     },[employee])
 

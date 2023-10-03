@@ -25,7 +25,6 @@ const List = ({idb}) => {
             let cList = data.filter((item) => {
                 return !item.toDate  
             })
-            console.log(cList)
             setCurrentList(cList)
             let pList = data.filter((item) => {
                 return item.toDate

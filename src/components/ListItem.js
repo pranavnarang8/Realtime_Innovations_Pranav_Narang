@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import "./ListItem.css"
 import { useDispatch } from 'react-redux';
-import { setEmployee } from '../features/employeeSlice';
+import { setEmployee, setList } from '../features/employeeSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { resetProfile, } from '../features/roleSlice';
 
 const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
   const [isSwiped, setIsSwiped] = useState(false);
@@ -19,16 +21,23 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       fromDate: fromDate,
       toDate: toDate,
     }))
+    dispatch(resetProfile())
     if(!desktop){
       history.push("/addEmp")
     }
-    
   }
 
   const handleSwipe = () =>{
-    setIsSwiped(true);
+    setTimeout(()=>{
+      if(!isSwiped){
+        setIsSwiped(true);
+      }else{
+        setIsSwiped(false)
+      }
+    },500)
   }
 
+  
   const deleteEmployee = () =>{
     const dbPromise = idb.open("employee-db",1)
     dbPromise.onsuccess = () => {
@@ -47,6 +56,12 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
         alert("Error with Indexed DB here",error)
       }
   }
+
+  dispatch(setList(true))
+  if(!desktop){
+    setIsSwiped(false)
+    history.push("/")
+  }
 }
   return (
     <>
@@ -56,7 +71,7 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       <span>{role}</span>
       <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       </div>
-      {isSwiped && <div className='listItem__swipeDelete'><DeleteIcon onClick={deleteEmployee}/></div>}
+      {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon onClick={deleteEmployee}/></div>}
     </div> : 
     <div className='listItem__desktop'>
       <p>{name}</p>

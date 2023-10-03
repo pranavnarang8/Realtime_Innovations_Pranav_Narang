@@ -21,15 +21,16 @@ const ListDesk = ({idb}) => {
           const tx = db.transaction("employeeData","readonly");
           const employeeData = tx.objectStore("employeeData");
           const employees = employeeData.getAll();
+          let response;
           employees.onsuccess = (query) => {
             setEmpData(query.srcElement.result);
-            let data = query.srcElement.result;
-            dispatch(setList(data));
-            let cList = data.filter((item) => {
+            response = query.srcElement.result;
+            // dispatch(setList(data));
+            let cList = response.filter((item) => {
                 return !item.toDate  
             })
             setCurrentList(cList)
-            let pList = data.filter((item) => {
+            let pList = response.filter((item) => {
                 return item.toDate
             })
             setPreviousList(pList)
@@ -42,6 +43,7 @@ const ListDesk = ({idb}) => {
           tx.oncomplete = () => {
             db.close();
           }
+          dispatch(setList(response))
       }
     }
 
@@ -49,6 +51,7 @@ const ListDesk = ({idb}) => {
     
     useEffect(() => {
         fetchEmployees();
+        console.log("Hello")
     },[list])
 
   return (

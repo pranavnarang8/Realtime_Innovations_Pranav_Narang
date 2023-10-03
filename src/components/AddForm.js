@@ -80,6 +80,12 @@ const AddForm = ({idb}) => {
 
 
     const handleAddition = () => {
+      if(tDate){
+        if(tDate.getTime() < fDate.getTime()){
+          alert("To date cannot be greater than From date")
+          return;
+        }
+      }
         const dbPromise = idb.open("employee-db",1)
         if(name && role && fDate){
           dbPromise.onsuccess = () => {

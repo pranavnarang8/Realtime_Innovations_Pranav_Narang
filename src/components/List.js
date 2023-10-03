@@ -4,12 +4,16 @@ import ListItem from './ListItem';
 import logo from "../Frame_19726.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectList, setList } from '../features/employeeSlice';
 
 const List = ({idb}) => {
     const[currentList, setCurrentList] = useState(null);
     const[previousList, setPreviousList] = useState(null);
     const [empData, setEmpData] = useState([])
     const history = useHistory();
+    const dispatch = useDispatch();
+    const list = useSelector(selectList)
 
     const fetchEmployees = () =>{
         const dbPromise = idb.open("employee-db",1)
@@ -19,15 +23,21 @@ const List = ({idb}) => {
           const tx = db.transaction("employeeData","readonly");
           const employeeData = tx.objectStore("employeeData");
           const employees = employeeData.getAll();
+          let data;
           employees.onsuccess = (query) => {
             setEmpData(query.srcElement.result);
-            let data = query.srcElement.result
+            data = query.srcElement.result;
+            let reference = new Date()
             let cList = data.filter((item) => {
-                return !item.toDate  
+                if(item.toDate){
+                    let checkDate = new Date(item.toDate);
+                    return checkDate.getTime() > reference.getTime() 
+                }
+                return true
             })
             setCurrentList(cList)
             let pList = data.filter((item) => {
-                return item.toDate
+                return new Date(item.toDate) < reference 
             })
             setPreviousList(pList)
           }
@@ -39,6 +49,7 @@ const List = ({idb}) => {
           tx.oncomplete = () => {
             db.close();
           }
+          dispatch(setList(data))
       }
     }
     const addEmployee = () => {
@@ -48,7 +59,8 @@ const List = ({idb}) => {
     
     useEffect(() => {
         fetchEmployees();
-    },[])
+        console.log("Checking")
+    },[list])
 
 
   return (

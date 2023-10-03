@@ -25,13 +25,16 @@ const ListDesk = ({idb}) => {
           employees.onsuccess = (query) => {
             setEmpData(query.srcElement.result);
             response = query.srcElement.result;
-            // dispatch(setList(data));
             let cList = response.filter((item) => {
-                return !item.toDate  
+                if(item.toDate){
+                    let checkDate = new Date(item.toDate);
+                    return checkDate.getTime() > reference.getTime() 
+                }
+                return true 
             })
             setCurrentList(cList)
             let pList = response.filter((item) => {
-                return item.toDate
+                return new Date(item.toDate) < reference 
             })
             setPreviousList(pList)
           }

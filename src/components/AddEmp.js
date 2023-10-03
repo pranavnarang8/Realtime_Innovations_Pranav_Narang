@@ -83,6 +83,13 @@ const AddEmp = ({idb}) => {
     }
 
     const handleAddition = () => {
+      if(tDate){
+        let checkDate = new Date()
+        if(tDate.getTime() < fDate.getTime()){
+          alert("Please enter a valid 'To' date")
+          return;
+        }
+      }
       const dbPromise = idb.open("employee-db",1)
         if(name && role && fDate){
           if(role.profile == "Product Design" || "Flutter Developer" || "QA Tester" || "Product Owner"){

@@ -7,20 +7,21 @@ import {
 import Header from './components/Header';
 import List from './components/List';
 import AddForm from './components/AddForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectPicker } from './features/dateSlice';
 import RoleOptions from './components/RoleOptions';
 import { useState } from 'react';
 import { selectEmployee } from './features/employeeSlice';
 import AddEmp from './components/AddEmp';
 import ListDesk from './components/ListDesk';
-import { selectOptions } from './features/roleSlice';
+import { closeOptions, selectOptions } from './features/roleSlice';
 
 function App() {
   const picker = useSelector(selectPicker);
   const employee = useSelector(selectEmployee);
   const [mobileView, setMobileView] = useState(true)
   const option = useSelector(selectOptions);
+  const dispatch = useDispatch()
 
   const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ;
 
@@ -63,7 +64,7 @@ function App() {
     <>
     {mobileView && window.innerWidth < 540?
     <Router>
-    <div className="app">
+    <div className="app" onTouchStart={()=>dispatch(closeOptions)}>
       <Switch>
         <Route exact path="/">
         <Header title="Employee List"/>
@@ -77,7 +78,7 @@ function App() {
       </Switch>
     </div>
     </Router> : 
-    <div className="app__desktop">
+    <div className="app__desktop" onClick={()=>dispatch(closeOptions)}>
     <Header title="Employee List"/>
     <AddEmp idb={idb}/>
     <ListDesk idb={idb}/>

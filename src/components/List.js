@@ -101,6 +101,9 @@ const List = ({idb}) => {
             <img src={logo} alt="" />
             <button onClick={addEmployee}><AddOutlinedIcon/></button>
         </div>
+        {deleteDialog && <div className='list__deleteDialog'>
+            <h4>Employee Data has been Deleted</h4>
+            <p>Undo</p></div>}        
         </>}
         
     </div>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeRole, selectOptions } from '../features/roleSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { unsetEmployee } from '../features/employeeSlice';
+import { resetDeleteDialog, setDeleteDialog, unsetEmployee } from '../features/employeeSlice';
 
 const Header = ({title, employee, idb}) => {
   const option = useSelector(selectOptions);
@@ -31,6 +31,10 @@ const Header = ({title, employee, idb}) => {
   }
   dispatch(unsetEmployee())
   dispatch(removeRole())
+  dispatch(setDeleteDialog());
+  setTimeout(() => {
+    dispatch(resetDeleteDialog())
+  },2000)
   history.push("/")
 }
     

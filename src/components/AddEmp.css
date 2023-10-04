@@ -140,6 +140,16 @@
     max-height: 295px !important;
 }
 
+.MuiPickersToolbar-root{
+    padding: 8px 24px !important;
+}
+
+.MuiPickersToolbar-content {
+    font-size: 14px !important;
+    color: #1DA1F2;
+}
+
+
 .MuiDialogActions-root{
     padding: 0px;
     padding: 7px 9px;

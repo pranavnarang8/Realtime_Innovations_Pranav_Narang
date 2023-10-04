@@ -60,7 +60,6 @@ const List = ({idb}) => {
     
     useEffect(() => {
         fetchEmployees();
-        console.log("Checking")
     },[list])
 
 

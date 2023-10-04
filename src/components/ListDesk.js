@@ -60,7 +60,7 @@ const ListDesk = ({idb}) => {
   return (
     <>
         {empData?.length>0?
-            <div className={`listDesk ${option && "listDesk__opacity"}`}>
+            <div className={`listDesk`}>
         <div className='listDesk__desktop'>
         {currentList.length > 0 && <div className="listDesk__currentContainer">
             <h3>Current Employees</h3>
@@ -82,13 +82,11 @@ const ListDesk = ({idb}) => {
                 })}
             </ul>
         </div>}
-        {/* <button onClick={addEmployee}><AddOutlinedIcon/></button> */}
         </div> 
         </div>: 
         <>
         <div className="listDesk__emptyContainer">
             <img src={logo} alt="" />
-            {/* <button onClick={addEmployee}><AddOutlinedIcon/></button> */}
         </div>
         </>}
       

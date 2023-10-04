@@ -36,7 +36,7 @@ const Header = ({title, employee, idb}) => {
     
   return (
     <>
-    <div className={`header__mobile ${option && 'header__opacity'}`}>
+    <div className={`header__mobile`}>
       <h2>{title}</h2>
       {employee && <DeleteIcon onClick={deleteEmployee}/>}
     </div>

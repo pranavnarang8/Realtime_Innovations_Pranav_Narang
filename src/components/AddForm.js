@@ -191,7 +191,7 @@ const AddForm = ({idb}) => {
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
-            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} onChange={()=>setFDate(null)}/>
+            <input type="text" placeholder="From *" value={fDate?.toDateString() ? fDate?.toDateString().substring(4,15) : ""} onChange={()=>setFDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <ArrowRightAltIcon/>

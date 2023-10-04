@@ -225,7 +225,7 @@ const AddEmp = ({idb}) => {
 }
 <LocalizationProvider dateAdapter={AdapterDateFns}>
 {tPicker && <StaticDatePicker onClose={()=>setTPicker(false)} value={tDate ? tDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
-{fPicker && <StaticDatePicker onClose={()=>setFPicker(false)} maxDate={new Date()} value={fDate ? fDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
+{fPicker && <StaticDatePicker onClose={()=>setFPicker(false)} value={fDate ? fDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
 </LocalizationProvider>
 </div>
 </div>}

@@ -199,7 +199,7 @@ const AddForm = ({idb}) => {
     </div>
 
     
-    {(tPicker || fPicker) && <div className='addForm__datePicker'>
+    {(tPicker || fPicker) &&<div className='addForm__pickerContainer'> <div className='addForm__datePicker'>
         {fPicker && <><div className="addForm__pickerBtn">
             <button onClick={onSelectToday}>Today</button>
             <button onClick={onSelectMonday}>Next Monday</button>
@@ -216,7 +216,7 @@ const AddForm = ({idb}) => {
         {tPicker && <StaticDatePicker onClose={()=>setTPicker(false)} value={tDate ? tDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
         {fPicker && <StaticDatePicker onClose={()=>setFPicker(false)} value={fDate ? fDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>} 
         </LocalizationProvider>
-    </div>}
+    </div> </div>}
     </>
   )
 }

@@ -47,7 +47,6 @@
     outline:none;
     border: none;
     margin-left: 3px;
-    /* margin-right: 8px; */
     text-overflow: ellipsis;
     flex:1;
 }
@@ -128,12 +127,27 @@
 .MuiButton-root {
     color: #1DA1F2 !important;
     background-color: whitesmoke !important;
+    font-size: 12px !important;
   }
 
 .MuiButton-root:hover{
     color:#fff !important;
     opacity: 0.85 !important;
     background-color: #1DA1F2 !important;
+}
+
+.MuiDateCalendar-root{
+    max-height: 295px !important;
+}
+
+.MuiDialogActions-root{
+    padding: 0px;
+    padding: 7px 9px;
+}
+
+.MuiPickersLayout-root{
+    margin-bottom: 7px;
+    border-radius: 10px;
 }
 
 @media all and (max-width:1200px) and (min-width:850px){

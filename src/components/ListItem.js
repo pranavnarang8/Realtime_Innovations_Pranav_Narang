@@ -80,7 +80,7 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb, cList}) => {
     <div className='listItem__desktop'>
       <p>{name}</p>
       <span>{role}</span>
-      <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
+      <span>From {fromDate?.toDateString().substring(4,15)}{toDate && !cList && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       <div className="listItem__actions">
         <EditIcon onClick={editEmployee}/>
         <DeleteIcon onClick={deleteEmployee}/>

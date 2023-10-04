@@ -29,6 +29,11 @@ const AddEmp = ({idb}) => {
       handleChange(new Date())
     }
 
+    const onSelectNoDate = () =>{
+      setTDate(null);
+      setTPicker(false)
+    }
+
     const onSelectMonday = () =>{
       const currentDate = new Date();
       const currentDay = currentDate.getDay();
@@ -216,8 +221,8 @@ const AddEmp = ({idb}) => {
         </div>
     </div>
     <div className="addEmp__actions">
-        <button onClick={handleCancel}>Cancel</button>
-        <button onClick={handleAddition}>Save</button>
+        <button disabled={tPicker || fPicker} onClick={handleCancel}>Cancel</button>
+        <button disabled={tPicker || fPicker} onClick={handleAddition}>Save</button>
     </div>
     </div>
     </div>
@@ -235,7 +240,7 @@ const AddEmp = ({idb}) => {
 </div></>}
 {
   tPicker &&  <div className="addEmp__pickerBtn">
-  <button onClick={()=>setTPicker(false)}>No Date</button>
+  <button onClick={onSelectNoDate}>No Date</button>
   <button onClick={onSelectToday}>Today</button>
 </div>
 }

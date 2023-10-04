@@ -39,6 +39,11 @@ const AddForm = ({idb}) => {
       handleChange(new Date())
     }
 
+    const onSelectNoDate = () =>{
+      setTDate(null);
+      setTPicker(false)
+    }
+
     const onSelectMonday = () =>{
       const currentDate = new Date();
       const currentDay = currentDate.getDay();
@@ -191,15 +196,15 @@ const AddForm = ({idb}) => {
         </div>
         <ArrowRightAltIcon/>
         <div className="addForm__dateInput">
-            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} onChange={()=>setTDate(null)}/>
+            <input type="text" placeholder="To" value = {tDate?.toDateString() ? tDate?.toDateString().substring(4,15) : ""} onChange={()=>setTDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
       </div>
     </div>
     
    <div className="addForm__actions">
-        <button onClick={handleCancel}>Cancel</button>
-        <button onClick={handleAddition}>Save</button>
+        <button disabled={tPicker || fPicker} onClick={handleCancel}>Cancel</button>
+        <button disabled={tPicker || fPicker} onClick={handleAddition}>Save</button>
     </div>
 
     
@@ -213,7 +218,7 @@ const AddForm = ({idb}) => {
             <button onClick={onSelectNextWeek}>After 1 week</button>
         </div> </> } 
         {tPicker && <div className="addForm__pickerBtn">
-            <button onClick={() => setTPicker(false)}>No Date</button>
+            <button onClick={onSelectNoDate}>No Date</button>
             <button onClick={onSelectToday}>Today</button>
         </div>}
         <LocalizationProvider dateAdapter={AdapterDateFns}>

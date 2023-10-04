@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { resetProfile, } from '../features/roleSlice';
 
-const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
+const ListItem = ({id, name, role, fromDate, toDate, desktop, idb, cList}) => {
   const [isSwiped, setIsSwiped] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,12 +34,6 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       }else{
         setIsSwiped(false)
       }
-    },500)
-  }
-
-  const handleDelete = () =>{
-    setTimeout(()=>{
-      deleteEmployee();
     },500)
   }
 
@@ -79,7 +73,7 @@ const ListItem = ({id, name, role, fromDate, toDate, desktop, idb}) => {
       <div className="listItem__mobile" onClick={editEmployee}>
       <p>{name}</p>
       <span>{role}</span>
-      <span>From {fromDate?.toDateString().substring(4,15)}{toDate && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
+      <span>From {fromDate?.toDateString().substring(4,15)}{toDate && !cList && <span>{" "}to {toDate?.toDateString().substring(4,15)}</span>}</span>
       </div>
       {isSwiped && <div className='listItem__swipeDelete'><DeleteOutlineIcon onClick={deleteEmployee}/></div>}
     </li> : 

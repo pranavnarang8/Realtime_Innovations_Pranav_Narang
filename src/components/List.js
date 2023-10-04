@@ -72,9 +72,9 @@ const List = ({idb}) => {
         {currentList.length > 0 && <div className="list__currentContainer">
             <h3>Current Employees</h3>
             <ul>
-                {currentList?.map(({id, name, role, fromDate}) => {
+                {currentList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
-                        <ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)}/>
+                        <ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate={new Date(fromDate)} toDate={toDate && new Date(toDate)} cList={true}/>
                     )
                 })}
             </ul>
@@ -84,7 +84,7 @@ const List = ({idb}) => {
             <ul>
             {previousList?.map(({id, name, role, fromDate, toDate}) => {
                     return (
-                        <ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)}/>
+                        <ListItem idb={idb} listType="Current" name={name} role={role} key={id} id={id} fromDate = {new Date(fromDate)} toDate = {new Date(toDate)} cList={false}/>
                     )
                 })}
             </ul>

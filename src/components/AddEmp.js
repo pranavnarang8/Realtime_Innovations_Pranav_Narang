@@ -203,15 +203,15 @@ const AddEmp = ({idb}) => {
       </div>
       <div className="addEmp__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={profile ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Select Role *' />
+        <input type="text" value={profile ? "" : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Select Role *' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="From *" value={fDate ? fDate?.toDateString().substring(4,15) : null} onChange={()=>setFDate(null)}/>
+            <input type="text" placeholder="From *" value={fDate?.toDateString() ? fDate?.toDateString().substring(4,15) : ""} onChange={()=>setFDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={handleFDate}/>
         </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="To" value={tDate?.toDateString().substring(4,15)} onChange={()=>setTDate(null)} />
+            <input type="text" placeholder="To" value={tDate?.toDateString() ? tDate?.toDateString().substring(4,15) : ""} onChange={()=>setTDate(null)} />
             <InsertInvitationOutlinedIcon onClick={handleTDate}/>
         </div>
     </div>

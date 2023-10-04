@@ -125,6 +125,17 @@
     opacity: 0.85;
 }
 
+.MuiButton-root {
+    color: #1DA1F2 !important;
+    background-color: whitesmoke !important;
+  }
+
+.MuiButton-root:hover{
+    color:#fff !important;
+    opacity: 0.85 !important;
+    background-color: #1DA1F2 !important;
+}
+
 @media all and (max-width:1200px) and (min-width:850px){
     .addEmp__desktop{
         padding: 30px 50px;

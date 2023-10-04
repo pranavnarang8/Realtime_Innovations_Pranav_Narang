@@ -9,7 +9,7 @@ import { useDispatch , useSelector } from 'react-redux';
 import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
 import { chooseRole, openOptions, removeRole, selectRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { DateCalendar } from '@mui/x-date-pickers';
+import { DateCalendar, MobileDatePicker, StaticDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
@@ -177,17 +177,17 @@ const AddForm = ({idb}) => {
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role?.profile} placeholder='Employee Role *' />
+        <input type="text" value={role?.profile} placeholder='Employee Role *' onChange={() => dispatch(removeRole())} />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">
         <div className="addForm__dateInput">
-            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} onChange={()=>setFDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <ArrowRightAltIcon/>
         <div className="addForm__dateInput">
-            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} />
+            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} onChange={()=>setTDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
       </div>
@@ -213,8 +213,8 @@ const AddForm = ({idb}) => {
             <button onClick={onSelectToday}>Today</button>
         </div>}
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-        {tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
-        {fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
+        {tPicker && <StaticDatePicker onClose={()=>setTPicker(false)} value={tDate ? tDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
+        {fPicker && <StaticDatePicker onClose={()=>setFPicker(false)} value={fDate ? fDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>} 
         </LocalizationProvider>
     </div>}
     </>

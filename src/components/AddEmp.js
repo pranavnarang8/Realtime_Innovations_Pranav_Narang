@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectOptions, selectProfile, selectRole, setProfile } from '../features/roleSlice';
 import { chooseRole, openOptions, removeRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { DateCalendar } from '@mui/x-date-pickers';
+import { DateCalendar, StaticDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { selectEmployee, selectList, setList, unsetEmployee } from '../features/employeeSlice';
@@ -27,9 +27,6 @@ const AddEmp = ({idb}) => {
     const dispatch = useDispatch()
     const option = useSelector(selectOptions)
 
-    const handleTDateChange = () =>{
-      setTDate(null)
-    }
     const onSelectToday = () =>{
       handleChange(new Date())
     }
@@ -77,14 +74,13 @@ const AddEmp = ({idb}) => {
     const handleCancel = () => {
         setName("");
         dispatch(unsetEmployee());
-        handleTDateChange();
+        setTDate(null)
         setFDate(null);
         dispatch(setProfile());
     }
 
     const handleAddition = () => {
       if(tDate){
-        let checkDate = new Date()
         if(tDate.getTime() < fDate.getTime()){
           alert("Please enter a valid 'To' date")
           return;
@@ -119,7 +115,7 @@ const AddEmp = ({idb}) => {
       
               employees.onsuccess = () => {
                 tx.oncomplete = () => {
-                  db.close()
+                  db.close();
                 }
               }
       
@@ -177,6 +173,7 @@ const AddEmp = ({idb}) => {
           setFDate(employee.fromDate);
           setTDate(employee.toDate); 
       }
+      console.log("Hello")
     },[employee])
 
   return (
@@ -194,11 +191,11 @@ const AddEmp = ({idb}) => {
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="From *" value={fDate?.toDateString().substring(4,15)} onChange={()=>setFDate(null)}/>
+            <input type="text" placeholder="From *" value={fDate ? fDate?.toDateString().substring(4,15) : null} onChange={()=>setFDate(null)}/>
             <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
         </div>
         <div className="addEmp__dateInput">
-            <input type="text" placeholder="To" value = {tDate?.toDateString().substring(4,15)} onChange={handleTDateChange} />
+            <input type="text" placeholder="To" value={tDate?.toDateString().substring(4,15)} onChange={()=>setTDate(null)} />
             <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
         </div>
     </div>
@@ -227,8 +224,8 @@ const AddEmp = ({idb}) => {
 </div>
 }
 <LocalizationProvider dateAdapter={AdapterDateFns}>
-{tPicker && <DateCalendar value={tDate ? tDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
-{fPicker && <DateCalendar value={fDate ? fDate : new Date()} onChange={(newValue) => handleChange(newValue)}/>}
+{tPicker && <StaticDatePicker onClose={()=>setTPicker(false)} value={tDate ? tDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
+{fPicker && <StaticDatePicker onClose={()=>setFPicker(false)} maxDate={new Date()} value={fDate ? fDate : new Date()} onAccept={(newValue) => handleChange(newValue)}/>}
 </LocalizationProvider>
 </div>
 </div>}

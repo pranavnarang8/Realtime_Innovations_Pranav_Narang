@@ -5,27 +5,25 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectOptions, selectProfile, selectRole, setProfile } from '../features/roleSlice';
+import { closeOptions, selectOptions, selectProfile, selectRole, setProfile } from '../features/roleSlice';
 import { chooseRole, openOptions, removeRole } from '../features/roleSlice';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { DateCalendar, StaticDatePicker } from '@mui/x-date-pickers';
+import { StaticDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { selectEmployee, selectList, setList, unsetEmployee } from '../features/employeeSlice';
+import { selectEmployee, setList, unsetEmployee } from '../features/employeeSlice';
 
 const AddEmp = ({idb}) => {
     const [name, setName] = useState("");
-    const [tDate, setTDate] = useState(null)
-    const [fDate, setFDate] = useState(null)
-    const [tPicker, setTPicker] = useState(false)
-    const [fPicker, setFPicker] = useState(false)
-    const [data, setData] = useState([])
-    const employee = useSelector(selectEmployee)
+    const [tDate, setTDate] = useState(null);
+    const [fDate, setFDate] = useState(null);
+    const [tPicker, setTPicker] = useState(false);
+    const [fPicker, setFPicker] = useState(false);
+    const [data, setData] = useState([]);
+    const employee = useSelector(selectEmployee);
     const role = useSelector(selectRole);
-    // const [profile, setProfile] = useState(null)
-    const profile = useSelector(selectProfile)
-    const dispatch = useDispatch()
-    const option = useSelector(selectOptions)
+    const profile = useSelector(selectProfile);
+    const dispatch = useDispatch();
+    const option = useSelector(selectOptions);
 
     const onSelectToday = () =>{
       handleChange(new Date())
@@ -68,7 +66,12 @@ const AddEmp = ({idb}) => {
     }
 
     const handleOptions = () => {
-      dispatch(openOptions())
+      if(!option){
+        dispatch(openOptions())
+      }else{
+        dispatch(closeOptions())
+      }
+      
     }
 
     const handleCancel = () => {
@@ -140,6 +143,20 @@ const AddEmp = ({idb}) => {
         dispatch(setProfile());
     }
 
+    const handleFDate = () =>{
+      if(tPicker){
+        setTPicker(false)
+      }
+      setFPicker(true)
+    }
+
+    const handleTDate = () =>{
+      if(fPicker){
+        setFPicker(false)
+      }
+      setTPicker(true)
+    }
+
     useEffect(()=>{
       const fetchEmployees = () =>{
           const dbPromise = idb.open("employee-db",1)
@@ -173,12 +190,11 @@ const AddEmp = ({idb}) => {
           setFDate(employee.fromDate);
           setTDate(employee.toDate); 
       }
-      console.log("Hello")
     },[employee])
 
   return (
     <>
-    <div className={`addEmp ${option && "addEmp__opacity"}`}>
+    <div className={`addEmp`}>
       <div className='addEmp__desktop'>
         <div className="addEmp__container">
       <div className="addEmp__nameInput">
@@ -187,16 +203,16 @@ const AddEmp = ({idb}) => {
       </div>
       <div className="addEmp__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={profile ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Employee Role *' />
+        <input type="text" value={profile ? profile : role?.profile} onChange={() => dispatch(removeRole())} placeholder='Select Role *' />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
         <div className="addEmp__dateInput">
             <input type="text" placeholder="From *" value={fDate ? fDate?.toDateString().substring(4,15) : null} onChange={()=>setFDate(null)}/>
-            <InsertInvitationOutlinedIcon onClick={() => setFPicker(true)}/>
+            <InsertInvitationOutlinedIcon onClick={handleFDate}/>
         </div>
         <div className="addEmp__dateInput">
             <input type="text" placeholder="To" value={tDate?.toDateString().substring(4,15)} onChange={()=>setTDate(null)} />
-            <InsertInvitationOutlinedIcon onClick={() => setTPicker(true)}/>
+            <InsertInvitationOutlinedIcon onClick={handleTDate}/>
         </div>
     </div>
     <div className="addEmp__actions">

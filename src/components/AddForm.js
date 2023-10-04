@@ -6,13 +6,12 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsertInvitationOutlinedIcon from '@mui/icons-material/InsertInvitationOutlined';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { useDispatch , useSelector } from 'react-redux';
-import { closeDatePicker, openDatePicker, selectPicker } from '../features/dateSlice';
-import { chooseRole, openOptions, removeRole, selectRole } from '../features/roleSlice';
+import { chooseRole, closeOptions, openOptions, removeRole, selectOptions, selectRole } from '../features/roleSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { DateCalendar, MobileDatePicker, StaticDatePicker } from '@mui/x-date-pickers';
+import {StaticDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { selectEmployee, selectList, unsetEmployee } from '../features/employeeSlice';
+import { selectEmployee, unsetEmployee } from '../features/employeeSlice';
 
 
 const AddForm = ({idb}) => {
@@ -26,9 +25,14 @@ const AddForm = ({idb}) => {
     const employee = useSelector(selectEmployee)
     const history = useHistory();
     const dispatch = useDispatch();
+    const option = useSelector(selectOptions)
 
     const handleOptions = () =>{
+      if(!option){
         dispatch(openOptions())
+      }else{
+        dispatch(closeOptions())
+      }
     }
 
     const onSelectToday = () =>{
@@ -177,7 +181,7 @@ const AddForm = ({idb}) => {
       </div>
       <div className="addForm__roleInput">
         <WorkOutlineOutlinedIcon/>
-        <input type="text" value={role?.profile} placeholder='Employee Role *' onChange={() => dispatch(removeRole())} />
+        <input type="text" value={role?.profile} placeholder='Select Role *' onChange={() => dispatch(removeRole())} />
         <ArrowDropDownOutlinedIcon onClick={handleOptions}/>
       </div>
       <div className="addForm__datePickers">

@@ -8,7 +8,6 @@ const RoleOptions = ({desktop}) => {
     const dispatch = useDispatch();
 
     const roleSelect = (e) => {
-        console.log(e.target)
         dispatch(chooseRole({
             profile: e.target.innerText,
         }))

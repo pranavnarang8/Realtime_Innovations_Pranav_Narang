@@ -32,12 +32,11 @@
     margin-left: auto;
     margin-right: auto;
     position: fixed;
-    top:180px;
+    top:130px;
+    right: 53%;
     align-items: center;
-    width:20%;
-    background-color: #fff;
+    width: 12%;
     z-index: 50;
-    background-color: azure;
 }
 
 .roleItems__desktop{
@@ -47,19 +46,23 @@
     padding: 10px;
     width: 100%;
     cursor: pointer;
-    /* color:#9b9b9b; */
 }
 
 .roleItems__desktop:hover{
     color:#1DA1F2;
 }
 
-.roleItems__desktop:nth-child(1){
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
 
 .roleItems__desktop:nth-child(4){
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+}
+
+@media all and (max-width:1200px) and (min-width:541px){
+    .roles__desktop{
+        position: fixed;
+        top:130px;
+        right:20%;
+        width: 24%;
+    }
 }
